@@ -1,6 +1,6 @@
 require 'rails/generators/base'
 module RailsEmberValidations
-  class InstallGenerator < Rails::Generators::NamedBase
+  class InstallGenerator < Rails::Generators::Base
 
 
 

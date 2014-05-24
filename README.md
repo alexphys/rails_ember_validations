@@ -25,6 +25,12 @@ Or install it yourself as:
 
     $ gem install rails_ember_validations
 
+For ember use , add 
+
+//= require validation-view
+
+in your application.js file, after the rest of ember files.
+
 ## Usage
 GENERAL
 
@@ -65,8 +71,11 @@ For example in the following form we get authorization errors at the top of our 
 
 {{#view App.ValidationView }}
 	{{#if view.authorizationValidation}}
-		<div class="alert alert-error">
+
+	    <div class="alert alert-error">
+
 			{{view.authorizationValidation}}
+
 		</div>
 
 	{{/if}}
@@ -95,12 +104,31 @@ If server returns no errors, view will trigger the save action of current contro
 ValidationView also comes with a cancel action embedded that rollsback any changes to record you were editing or deletes it if it was new.
 
 
+Excluding model properties
+
+When you have extra properties in your model that you don't want to be sent for validation, you can add inside your model a property array named excludedProperties and add any property that wont be sent for validation.
+
+Example:
 
 
 
+App.User = DS.Model.extend({
 
+  email: DS.attr('string'),
+  name: DS.attr('string'),
+  surname: DS.attr('string'),
 
+  can_edit: DS.attr('boolean'),
+  can_delete: DS.attr('boolean'),
+  can_read: DS.attr('boolean'),
+  can_manage: DS.attr('boolean'),
+  can_create: DS.attr('boolean'),
 
+  excludedProperties: ['can_edit', 'can_delete', 'can_read', 'can_manage', 'can_create'],
+
+});
+
+In the above when a user record is sent for validation , only name, surname and email are sent. Everything in excludedProperties is not.
 
 
 
